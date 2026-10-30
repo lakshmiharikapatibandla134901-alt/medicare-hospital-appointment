@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediCare | Hospital Appointment System</title>
+<style>
+:root{--navy:#15324b;--blue:#2878a8;--teal:#159b91;--pale:#eaf5f8;--bg:#f5f8fa;--ink:#243746;--muted:#718391;--line:#e2eaf0;--white:#fff;--red:#c94f59;--green:#18856f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{display:flex;min-height:100vh}.sidebar{width:245px;background:var(--navy);color:white;padding:26px 18px;display:flex;flex-direction:column;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;letter-spacing:-.5px}.brand-mark{width:36px;height:36px;border-radius:12px;background:var(--teal);display:grid;place-items:center;font-size:22px}
+.brand small{display:block;font-size:10px;letter-spacing:1.5px;color:#b9d5df;font-weight:600;margin-top:2px}
+.nav-label{font-size:10px;color:#8eafc0;letter-spacing:1.5px;margin:6px 12px}
+.nav button{display:flex;align-items:center;gap:12px;width:100%;padding:12px 13px;border:0;border-radius:10px;background:transparent;color:#d8e8ee;text-align:left;margin:3px 0;font-size:14px}
+.nav button.active,.nav button:hover{background:#244b65;color:white}.nav .ico{width:20px;text-align:center;font-size:17px}
+.side-note{margin-top:auto;background:#214760;padding:15px;border-radius:13px;font-size:12px;line-height:1.5;color:#d7e8ef}
+.main{flex:1;min-width:0}.topbar{height:76px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px}
+.breadcrumb{font-size:13px;color:var(--muted)}.top-right{display:flex;align-items:center;gap:14px}.demo-pill{background:#fff4dc;color:#94650c;border-radius:20px;padding:7px 11px;font-size:11px;font-weight:700}.avatar{width:37px;height:37px;border-radius:50%;background:#d9eef0;color:#176d72;display:grid;place-items:center;font-weight:800}
+.content{padding:30px 34px;max-width:1450px;margin:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:24px}
+h1{font-size:27px;color:var(--navy);margin:0 0 7px;letter-spacing:-.7px}.sub{color:var(--muted);font-size:14px;margin:0}
+.primary,.secondary,.danger{border:0;border-radius:9px;padding:11px 16px;font-weight:700;font-size:13px}.primary{background:var(--teal);color:white}.primary:hover{background:#10877e}.secondary{background:#e8f2f7;color:var(--blue)}.danger{background:#fff0f0;color:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}.stat,.panel,.doctor-card{background:white;border:1px solid var(--line);border-radius:14px;box-shadow:0 3px 14px #193b5008}
+.stat{padding:18px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat-icon{width:34px;height:34px;border-radius:10px;background:var(--pale);display:grid;place-items:center}.stat strong{display:block;font-size:27px;color:var(--navy);margin:12px 0 4px}.stat small{color:var(--muted);font-size:11px}
+.columns{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}.panel{padding:20px;margin-bottom:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.panel h2{font-size:16px;margin:0;color:var(--navy)}.muted{color:var(--muted);font-size:12px}
+.appointment-row{display:flex;align-items:center;gap:13px;padding:13px 0;border-top:1px solid var(--line)}.date-box{width:48px;height:50px;border-radius:10px;background:#edf7f8;display:grid;place-items:center;color:var(--teal);font-weight:800;font-size:17px;flex-shrink:0}.date-box span{font-size:9px;display:block;text-transform:uppercase}.row-info{flex:1;min-width:0}.row-info b{font-size:13px;display:block}.row-info small{font-size:11px;color:var(--muted)}.status{font-size:10px;padding:6px 9px;border-radius:20px;background:#e6f6f0;color:var(--green);font-weight:700}.status.cancelled{background:#fff0f0;color:var(--red)}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{padding:15px;border:1px solid var(--line);border-radius:11px;text-align:left;background:#fff;color:var(--navy)}.quick:hover{border-color:var(--teal);background:#f7fcfc}.quick span{display:block;font-size:20px;margin-bottom:8px}.quick b{font-size:12px}.quick small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.searchbar{display:flex;gap:10px;margin-bottom:18px}.searchbar input,.searchbar select,.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid #dce6eb;border-radius:9px;background:white;outline:none;color:var(--ink)}input:focus,select:focus,textarea:focus{border-color:var(--teal)!important;box-shadow:0 0 0 3px #159b9118}
+.doctor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.doctor-card{padding:17px}.doctor-top{display:flex;gap:12px;align-items:center;margin-bottom:13px}.doc-avatar{width:54px;height:54px;border-radius:15px;background:#e5f1f6;display:grid;place-items:center;font-size:27px}.doctor-card h3{font-size:14px;margin:0 0 4px;color:var(--navy)}.doctor-card .spec{font-size:11px;color:var(--teal);font-weight:700}.doctor-meta{font-size:11px;color:var(--muted);line-height:1.8;margin:12px 0}.doctor-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px}.fee{font-size:14px;font-weight:800;color:var(--navy)}.fee small{font-size:10px;color:var(--muted);font-weight:400}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:600px}th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--line);font-size:12px}th{color:var(--muted);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.7px}td b{color:var(--navy)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:#526675}.field.full{grid-column:1/-1}.field textarea{min-height:78px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}
+.notice{padding:12px 14px;border-radius:9px;background:#eef8f8;color:#286f70;font-size:12px;line-height:1.5;margin-bottom:16px}.empty{text-align:center;padding:35px;color:var(--muted);font-size:13px}.empty span{display:block;font-size:28px;margin-bottom:8px}
+.profile-card{display:flex;align-items:center;gap:18px;padding:22px}.profile-avatar{width:70px;height:70px;border-radius:20px;background:#dff1f1;display:grid;place-items:center;font-size:30px}.profile-card h2{margin:0 0 5px;color:var(--navy)}.profile-card p{margin:0;color:var(--muted);font-size:12px}
+.faq{padding:13px 0;border-top:1px solid var(--line)}.faq b{font-size:13px}.faq p{font-size:12px;color:var(--muted);line-height:1.5;margin:7px 0 0}
+.modal-backdrop{position:fixed;inset:0;background:#102b3b88;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-backdrop.show{display:flex}.modal{background:white;border-radius:16px;padding:24px;width:min(650px,100%);max-height:92vh;overflow:auto;box-shadow:0 20px 60px #102b3b40}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{margin:0;color:var(--navy);font-size:19px}.close{border:0;background:#eef3f6;border-radius:8px;width:32px;height:32px;font-size:18px;color:var(--muted)}
+.toast{position:fixed;right:22px;bottom:22px;background:var(--navy);color:white;padding:13px 17px;border-radius:10px;font-size:12px;box-shadow:0 8px 30px #102b3b30;display:none;z-index:20}.toast.show{display:block}
+footer{text-align:center;color:#9aa9b2;font-size:10px;padding:20px}
+@media(max-width:1050px){.doctor-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.app{display:block}.sidebar{width:100%;padding:13px 15px;gap:10px}.brand{font-size:19px}.nav-label,.side-note{display:none}.nav{display:flex;overflow:auto;gap:4px}.nav button{white-space:nowrap;width:auto;padding:9px 11px;font-size:11px}.nav .ico{display:none}.topbar{height:55px;padding:0 17px}.content{padding:22px 16px}.columns{grid-template-columns:1fr}.page-head{align-items:flex-start;flex-direction:column}.doctor-grid{grid-template-columns:1fr}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:23px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.searchbar{flex-direction:column}.demo-pill{font-size:9px}.top-right{gap:8px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">✚</div><div>MediCare<small>CARE MADE SIMPLE</small></div></div>
+  <div>
+    <div class="nav-label">MAIN MENU</div>
+    <nav class="nav">
+      <button class="active" data-page="overview"><span class="ico">▦</span>Overview</button>
+      <button data-page="doctors"><span class="ico">⚕</span>Find Doctors</button>
+      <button data-page="book"><span class="ico">＋</span>Book Appointment</button>
+      <button data-page="appointments"><span class="ico">▤</span>My Appointments</button>
+      <button data-page="profile"><span class="ico">◉</span>Patient Profile</button>
+      <button data-page="support"><span class="ico">?</span>Help & Support</button>
+    </nav>
+  </div>
+  <div class="side-note"><b>Patient care, made easier.</b><br>Find the right specialist and organise your visit in a few simple steps.</div>
+</aside>
+<main class="main">
+  <header class="topbar"><div class="breadcrumb" id="crumb">Workspace / Overview</div><div class="top-right"><span class="demo-pill">DEMO PROTOTYPE</span><div class="avatar" id="avatarTop">JD</div></div></header>
+  <div class="content" id="view"></div>
+  <footer>MediCare demonstration prototype · Sample doctors and appointments · Not connected to a real hospital</footer>
+</main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Book an appointment</h2><button class="close" id="closeModal">×</button></div><div id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const doctors=[
+{id:1,name:"Dr. Ananya Rao",spec:"Cardiology",qual:"MBBS, MD – Cardiology",exp:"12 years experience",fee:700,icon:"👩‍⚕️",days:"Mon–Fri"},
+{id:2,name:"Dr. Rahul Mehta",spec:"Dermatology",qual:"MBBS, MD – Dermatology",exp:"9 years experience",fee:500,icon:"👨‍⚕️",days:"Mon–Sat"},
+{id:3,name:"Dr. Priya Sharma",spec:"Pediatrics",qual:"MBBS, DCH",exp:"11 years experience",fee:600,icon:"👩‍⚕️",days:"Tue–Sun"},
+{id:4,name:"Dr. Arjun Reddy",spec:"Orthopedics",qual:"MBBS, MS – Orthopedics",exp:"15 years experience",fee:800,icon:"👨‍⚕️",days:"Mon–Fri"},
+{id:5,name:"Dr. Neha Kapoor",spec:"General Medicine",qual:"MBBS, MD – General Medicine",exp:"8 years experience",fee:400,icon:"👩‍⚕️",days:"Mon–Sat"},
+{id:6,name:"Dr. Vikram Das",spec:"Neurology",qual:"MBBS, DM – Neurology",exp:"14 years experience",fee:900,icon:"👨‍⚕️",days:"Wed–Sun"}
+];
+const sampleAppointments=[
+{id:101,patient:"Jordan Davis",phone:"9000000000",email:"jordan@example.com",doctorId:1,date:futureDate(2),time:"10:30 AM",reason:"Routine heart check-up",status:"Confirmed"},
+{id:102,patient:"Jordan Davis",phone:"9000000000",email:"jordan@example.com",doctorId:5,date:futureDate(5),time:"02:00 PM",reason:"General consultation",status:"Confirmed"}
+];
+function futureDate(n){let d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+let appointments=JSON.parse(localStorage.getItem("medicare_appointments")||"null")||sampleAppointments;
+let patient=JSON.parse(localStorage.getItem("medicare_patient")||"null")||{name:"Jordan Davis",age:"24",phone:"9000000000",email:"jordan@example.com"};
+function save(){localStorage.setItem("medicare_appointments",JSON.stringify(appointments));localStorage.setItem("medicare_patient",JSON.stringify(patient))}
+function doc(id){return doctors.find(d=>d.id==id)}
+function fmtDate(s){if(!s)return "";return new Date(s+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})}
+function upcoming(){return appointments.filter(a=>a.status!=="Cancelled"&&a.date>=futureDate(0)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))}
+function toast(msg){let t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2600)}
+function setPage(page){document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));document.getElementById("crumb").textContent="Workspace / "+({overview:"Overview",doctors:"Find Doctors",book:"Book Appointment",appointments:"My Appointments",profile:"Patient Profile",support:"Help & Support"}[page]);render(page);window.scrollTo(0,0)}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
+function render(page="overview"){
+document.getElementById("avatarTop").textContent=(patient.name||"P").split(" ").map(x=>x[0]).slice(0,2).join("").toUpperCase();
+const v=document.getElementById("view");
+if(page==="overview"){
+let next=upcoming()[0];
+v.innerHTML=`<div class="page-head"><div><h1>Good day, ${escapeHTML(patient.name.split(" ")[0])} 👋</h1><p class="sub">Here is your healthcare overview for today.</p></div><button class="primary" onclick="openBooking()">＋ Book an appointment</button></div>
+<div class="stats">
+<div class="stat"><div class="stat-top">Total appointments <span class="stat-icon">▤</span></div><strong>${appointments.length}</strong><small>All recorded demo bookings</small></div>
+<div class="stat"><div class="stat-top">Upcoming visits <span class="stat-icon">◷</span></div><strong>${upcoming().length}</strong><small>Scheduled appointments</small></div>
+<div class="stat"><div class="stat-top">Completed visits <span class="stat-icon">✓</span></div><strong>${appointments.filter(a=>a.status==="Completed").length}</strong><small>Marked as completed</small></div>
+<div class="stat"><div class="stat-top">Doctors available <span class="stat-icon">⚕</span></div><strong>${doctors.length}</strong><small>Sample doctor directory</small></div></div>
+<div class="columns"><section><div class="panel"><div class="panel-head"><h2>Upcoming appointments</h2><button class="secondary" onclick="setPage('appointments')">View all</button></div>${upcoming().length?upcoming().slice(0,3).map(a=>appointmentRow(a)).join(""):'<div class="empty"><span>♡</span>No upcoming appointments. Book a visit to get started.</div>'}</div>
+<div class="panel"><div class="panel-head"><h2>Recommended specialists</h2><button class="secondary" onclick="setPage('doctors')">Explore doctors</button></div><div class="doctor-grid">${doctors.slice(0,2).map(doctorCard).join("")}</div></div></section>
+<section><div class="panel"><div class="panel-head"><h2>Quick actions</h2></div><div class="quick-grid"><button class="quick" onclick="openBooking()"><span>＋</span><b>Book appointment</b><small>Schedule a doctor visit</small></button><button class="quick" onclick="setPage('doctors')"><span>⚕</span><b>Find a doctor</b><small>Browse specialists</small></button><button class="quick" onclick="setPage('appointments')"><span>▤</span><b>My appointments</b><small>Manage your visits</small></button><button class="quick" onclick="setPage('profile')"><span>◉</span><b>My profile</b><small>Update your details</small></button></div></div>
+<div class="panel"><div class="panel-head"><h2>Next appointment</h2></div>${next?`<div class="notice">Your next scheduled visit is shown below. Please arrive a little early.</div><div class="row-info"><b>${escapeHTML(doc(next.doctorId).name)}</b><small>${doc(next.doctorId).spec}</small><p><b>${fmtDate(next.date)} · ${next.time}</b></p></div>`:'<div class="empty">No visit scheduled yet.</div>'}</div>
+<div class="notice"><b>Demo information:</b> Doctor profiles, fees and appointment records are sample data for this academic prototype. This is not a medical advice service.</div></section></div>`;
+}else if(page==="doctors"){
+v.innerHTML=`<div class="page-head"><div><h1>Find a doctor</h1><p class="sub">Explore our sample directory and choose a specialist.</p></div></div><div class="searchbar"><input id="doctorSearch" placeholder="Search by doctor name or specialization..." oninput="filterDoctors()"><select id="specialtyFilter" onchange="filterDoctors()"><option value="">All specializations</option>${[...new Set(doctors.map(d=>d.spec))].map(s=>`<option>${s}</option>`).join("")}</select></div><div class="doctor-grid" id="doctorGrid">${doctors.map(doctorCard).join("")}</div>`;
+}else if(page==="book"){v.innerHTML=`<div class="page-head"><div><h1>Book an appointment</h1><p class="sub">Enter your details to schedule a demonstration appointment.</p></div></div><div class="panel"><div class="notice">This prototype uses sample doctors and browser storage. Submitting this form does not contact a real hospital.</div>${bookingForm()}</div>`;wireBooking();}
+else if(page==="appointments"){
+v.innerHTML=`<div class="page-head"><div><h1>My appointments</h1><p class="sub">Review and manage your scheduled hospital visits.</p></div><button class="primary" onclick="openBooking()">＋ New appointment</button></div><div class="panel"><div class="searchbar"><input id="apptSearch" placeholder="Search doctor or specialization..." oninput="filterAppointments()"><select id="apptStatus" onchange="filterAppointments()"><option value="">All statuses</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div><div class="table-wrap"><table><thead><tr><th>Doctor</th><th>Specialization</th><th>Date & time</th><th>Status</th><th>Action</th></tr></thead><tbody id="apptRows">${appointmentRows(appointments)}</tbody></table></div></div>`;
+}else if(page==="profile"){
+v.innerHTML=`<div class="page-head"><div><h1>Patient profile</h1><p class="sub">Manage your basic contact information.</p></div></div><div class="panel"><div class="profile-card"><div class="profile-avatar">👤</div><div><h2>${escapeHTML(patient.name)}</h2><p>Patient profile · Demonstration account</p></div></div><form id="profileForm" style="margin-top:20px"><div class="form-grid"><div class="field"><label>Full name *</label><input name="name" required value="${escapeAttr(patient.name)}"></div><div class="field"><label>Age</label><input name="age" type="number" min="1" max="120" value="${escapeAttr(patient.age)}"></div><div class="field"><label>Contact number *</label><input name="phone" required pattern="[0-9+ -]{8,15}" value="${escapeAttr(patient.phone)}"></div><div class="field"><label>Email address</label><input name="email" type="email" value="${escapeAttr(patient.email)}"></div></div><div class="form-actions"><button class="primary">Save profile</button></div></form></div><div class="panel"><h2>Data and privacy</h2><p class="muted">This prototype stores demonstration information in this browser only. It is not a secure medical-record system.</p><button class="danger" onclick="clearDemoData()">Clear demonstration data</button></div>`;
+document.getElementById("profileForm").onsubmit=e=>{e.preventDefault();let f=new FormData(e.target);patient=Object.fromEntries(f.entries());save();toast("Profile updated.");render("profile");};
+}else if(page==="support"){
+v.innerHTML=`<div class="page-head"><div><h1>Help & support</h1><p class="sub">Guidance for using the MediCare demonstration prototype.</p></div></div><div class="panel"><h2>Frequently asked questions</h2><div class="faq"><b>How do I book an appointment?</b><p>Choose “Book Appointment”, enter your details, select a sample doctor, date and time, then submit the form.</p></div><div class="faq"><b>Can I cancel an appointment?</b><p>Open “My Appointments” and use the Cancel action beside a confirmed appointment.</p></div><div class="faq"><b>Are these real doctors and appointment slots?</b><p>No. All doctor profiles, fees and bookings are sample information created for an academic demonstration.</p></div><div class="faq"><b>Where is my information stored?</b><p>Demonstration data is stored in LocalStorage in this browser. It is not transmitted to a hospital or cloud database.</p></div></div><div class="panel"><h2>Contact information</h2><p class="muted">Demo support desk · support@medicare-demo.example · This is placeholder contact information, not a real hospital contact.</p></div>`;
+}
+}
+function doctorCard(d){return `<article class="doctor-card"><div class="doctor-top"><div class="doc-avatar">${d.icon}</div><div><h3>${escapeHTML(d.name)}</h3><div class="spec">${d.spec}</div></div></div><div class="muted">${d.qual}</div><div class="doctor-meta">◷ ${d.exp}<br>▣ Available: ${d.days}<br>✚ General consultation</div><div class="doctor-bottom"><div class="fee">₹${d.fee} <small>/ visit (sample)</small></div><button class="primary" onclick="openBooking(${d.id})">Book</button></div></article>`}
+function appointmentRow(a){let d=doc(a.doctorId);return `<div class="appointment-row"><div class="date-box">${new Date(a.date+"T00:00:00").getDate()}<span>${new Date(a.date+"T00:00:00").toLocaleDateString("en-IN",{month:"short"})}</span></div><div class="row-info"><b>${escapeHTML(d?.name||"Doctor")}</b><small>${d?.spec||""} · ${a.time}</small></div><span class="status ${a.status==="Cancelled"?"cancelled":""}">${a.status}</span></div>`}
+function appointmentRows(list){return list.length?list.map(a=>{let d=doc(a.doctorId);return `<tr><td><b>${escapeHTML(d?.name||"Doctor")}</b></td><td>${d?.spec||"-"}</td><td>${fmtDate(a.date)}<br><span class="muted">${a.time}</span></td><td><span class="status ${a.status==="Cancelled"?"cancelled":""}">${a.status}</span></td><td>${a.status==="Confirmed"?`<button class="danger" onclick="cancelAppointment(${a.id})">Cancel</button>`:"—"}</td></tr>`}).join(""):'<tr><td colspan="5"><div class="empty">No appointments found.</div></td></tr>'}
+function filterDoctors(){let q=document.getElementById("doctorSearch").value.toLowerCase(),s=document.getElementById("specialtyFilter").value;document.getElementById("doctorGrid").innerHTML=doctors.filter(d=>(d.name+" "+d.spec).toLowerCase().includes(q)&&(!s||d.spec===s)).map(doctorCard).join("")||'<div class="empty">No doctors match your search.</div>'}
+function filterAppointments(){let q=document.getElementById("apptSearch").value.toLowerCase(),s=document.getElementById("apptStatus").value;let list=appointments.filter(a=>(doc(a.doctorId).name+" "+doc(a.doctorId).spec).toLowerCase().includes(q)&&(!s||a.status===s));document.getElementById("apptRows").innerHTML=appointmentRows(list)}
+function bookingForm(selected=""){return `<form id="bookingForm"><div class="form-grid"><div class="field"><label>Patient name *</label><input name="patient" required value="${escapeAttr(patient.name)}"></div><div class="field"><label>Age *</label><input name="age" type="number" min="1" max="120" required value="${escapeAttr(patient.age)}"></div><div class="field"><label>Contact number *</label><input name="phone" required pattern="[0-9+ -]{8,15}" value="${escapeAttr(patient.phone)}"></div><div class="field"><label>Email address</label><input name="email" type="email" value="${escapeAttr(patient.email)}"></div><div class="field"><label>Select doctor *</label><select name="doctorId" id="bookingDoctor" required><option value="">Choose a doctor</option>${doctors.map(d=>`<option value="${d.id}" ${selected==d.id?"selected":""}>${d.name} — ${d.spec}</option>`).join("")}</select></div><div class="field"><label>Appointment date *</label><input name="date" type="date" min="${futureDate(0)}" required></div><div class="field"><label>Available time slot *</label><select name="time" required><option value="">Choose a time</option>${["09:00 AM","10:30 AM","11:30 AM","01:00 PM","02:00 PM","03:30 PM","04:30 PM"].map(t=>`<option>${t}</option>`).join("")}</select></div><div class="field"><label>Reason for visit *</label><input name="reason" required maxlength="120" placeholder="e.g. General consultation"></div></div><div class="form-actions"><button type="button" class="secondary" onclick="setPage('doctors')">Cancel</button><button class="primary">Confirm demo booking</button></div></form>`}
+function wireBooking(){let f=document.getElementById("bookingForm");if(!f)return;f.onsubmit=e=>{e.preventDefault();let x=Object.fromEntries(new FormData(f).entries());let conflict=appointments.some(a=>a.status!=="Cancelled"&&a.doctorId==x.doctorId&&a.date===x.date&&a.time===x.time);if(conflict){toast("That doctor and time slot is already booked in this demo.");return}if(x.date<futureDate(0)){toast("Please choose today or a future date.");return}patient={...patient,name:x.patient,age:x.age,phone:x.phone,email:x.email};appointments.push({id:Date.now(),patient:x.patient,phone:x.phone,email:x.email,doctorId:Number(x.doctorId),date:x.date,time:x.time,reason:x.reason,status:"Confirmed"});save();closeModal();toast("Demo appointment saved successfully.");setPage("appointments")}}
+function openBooking(id=""){document.getElementById("modalTitle").textContent="Book an appointment";document.getElementById("modalBody").innerHTML=bookingForm(id);document.getElementById("modalBackdrop").classList.add("show");wireBooking()}
+function closeModal(){document.getElementById("modalBackdrop").classList.remove("show")}
+document.getElementById("closeModal").onclick=closeModal;document.getElementById("modalBackdrop").addEventListener("click",e=>{if(e.target.id==="modalBackdrop")closeModal()});
+function cancelAppointment(id){let a=appointments.find(x=>x.id===id);if(a&&confirm("Cancel this demonstration appointment?")){a.status="Cancelled";save();render("appointments");toast("Appointment cancelled.")}}
+function clearDemoData(){if(confirm("Clear all saved demonstration appointments and profile details?")){localStorage.removeItem("medicare_appointments");localStorage.removeItem("medicare_patient");appointments=sampleAppointments;patient={name:"Jordan Davis",age:"24",phone:"9000000000",email:"jordan@example.com"};save();render("profile");toast("Demo data reset.")}}
+function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function escapeAttr(s){return escapeHTML(s)}
+render();
+</script>
+</body>
+</html>
